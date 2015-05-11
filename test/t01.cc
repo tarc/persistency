@@ -2,9 +2,20 @@
 
 #include "context.hpp"
 
+class FalseImpl : public Persistency::Context< FalseImpl >
+{
+	friend class Persistency::Context< FalseImpl >;
+	private:
+		bool _commit()
+		{
+			return false;
+		}
+};
+
 TEST ( Include , Normal )
 {
-	EXPECT_EQ ( 0, 0 );
+	FalseImpl false_impl;
+	EXPECT_EQ ( false_impl.commit(), false );
 }
 
 int main(int argc, char** argv)
